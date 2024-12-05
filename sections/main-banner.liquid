@@ -1,0 +1,291 @@
+<section class="main-banner-container">
+    <div class="main-banner-head">
+      <img class="hamburger-icon" src="{{ 'hamb-menu.jpg' | asset_url }}" width="40px" height="40px" onclick="myFunction()">
+      <h1 class="main-banner-title">{{ section.settings['main-banner-title'] }}</h1>
+      <div class="main-center-text">
+        {{ section.settings['main-center-text'] }}
+      </div>
+      {% render 'main-button', button_text: section.settings['main-head-button'], classname: 'main-banner-button' %}
+    </div>
+    <div class="nav-for-small-screen" id="myTopnav">
+      <a href="#" style="font-size: 18px; width: 80%; margin: auto;">
+        {{ section.settings['main-center-text'] }}
+      </a>
+      <a href="#" {% render 'main-button', button_text: section.settings['main-head-button'], classname: 'main-banner-button' %} >
+      </a>
+    </div>
+    <div class="main-banner-body">
+      <div class="main-banner-body-content">
+        <h1 class="main-banner-body-title">{{ section.settings['main-banner-body-title'] }}</h1>
+        <p class="main-banner-body-dec">{{ section.settings['main-banner-body-dec'] }}</p>
+        <p class="main-banner-body-dec-mobile">
+          {{ section.settings['main-banner-body-dec-mobile'] }}
+        </p>
+        {% render 'main-button',
+          button_text: section.settings['sec-btn-text'],
+          classname: 'main-banner-body-btn',
+          variant: 'secondary'
+        %}
+      </div>
+      <div class="main-btn-for-mobile">
+        {% render 'main-button',
+          button_text: section.settings['sec-btn-text'],
+          classname: 'main-banner-body-btn',
+          variant: 'secondary'
+        %}
+      </div>
+    </div>
+    <div class="main-footer-between-sections">
+      <span>{{ section.settings['main-footer-text'] }}</span>
+    </div>
+  </section>
+  
+  {% comment %} start styling with css {% endcomment %}
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+  .main-banner-container {
+    font-family: Jost;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .main-banner-head {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+  }
+  .nav-for-small-screen {
+    overflow: hidden;
+    background-color: #F7F7F7;
+    float: left;
+    display: none;
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 25px;
+  }
+  .hamburger-icon {
+    display: none;
+  }
+  .main-banner-title {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+  .main-center-text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 13.5px;
+  }
+  .main-banner-body {
+    display: flex;
+    background-image: url('{{ 'main-cover.png' | asset_url }}');
+    height: 815px;
+  }
+  .main-banner-body-content {
+    min-height: 390px;
+    width: 600px;
+    background-color: #FFFFFF;
+    padding-left: 67px;
+    padding-top: 35px;
+    align-self: flex-end;
+  }
+  .main-banner-body-title {
+    font-family: Jost;
+    font-size: 70px;
+    font-weight: 500;
+    line-height: 70px;
+    margin: auto;
+    text-align: left;
+  }
+  .main-banner-body-dec {
+    font-family: Jost;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    margin-top: 50px;
+  }
+  .main-banner-body-dec-mobile {
+    display: none;
+  }
+  .main-banner-body-btn {
+    margin-top: 50px;
+    margin-bottom: 51px;
+  }
+  .main-btn-for-mobile {
+    display: none;
+  }
+  .main-footer-between-sections {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #F5F5F5;
+    font-family: Jost;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 13.42px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  /* Display for small screens (mobiles) */
+  @media only screen and (max-width: 768px) {
+    .main-banner-head {
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    } 
+    .hamburger-icon {
+      display: block;
+      position: absolute;
+      left: 18px;
+      cursor: pointer;
+    }
+    .nav-for-small-screen.responsive {
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-for-small-screen.responsive a {
+      float: none;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color:#000000;
+      padding-bottom:5px;
+    }
+    .p {
+      font-size: 0.9rem;
+    }
+    .main-center-text {
+      display: none;
+    }
+    .main-banner-button {
+      display: none;
+    }
+    .main-banner-body {
+      display: flex;
+      flex-direction: column;
+      height: 421px;
+      justify-content: space-between;
+    }
+    .main-banner-body-content {
+      display: flex;
+      min-height: 0px;
+      width: fit-content;
+      flex-direction: column;
+      align-self: unset;
+      width: 100%;
+      padding: 49px 89px 12px;
+    }
+    .main-banner-body-title {
+      font-family: Jost;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 30px;
+      text-align: center;
+    }
+    .main-banner-body-dec {
+      display: none;
+    }
+    .main-banner-body-dec-mobile {
+      font-family: Jost;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20.8px;
+      text-align: center;
+      display: flex;
+      margin-top: 21px;
+      margin-bottom: 12px;
+    }
+    .main-banner-body-content button {
+      display: none;
+    }
+    .main-btn-for-mobile {
+      display: flex;
+      justify-content: center;
+    }
+    .main-btn-for-mobile button {
+      display: flex;
+    }
+  }
+  
+  </style>
+  {% comment %} end styling with css {% endcomment %}
+  
+  {% comment %} start schema to add data {% endcomment %}
+  {% schema %}
+  {
+    "name": "main banner",
+    "settings": [
+      {
+        "type": "text",
+        "id": "main-banner-title",
+        "label": "Main Logo Text"
+      },
+      {
+        "type": "text",
+        "id": "main-center-text",
+        "label": "Main center Text"
+      },
+      {
+        "type": "text",
+        "id": "main-banner-body-title",
+        "label": "Main Container title"
+      },
+      {
+        "type": "text",
+        "id": "main-head-button",
+        "label": "Main Head Button Text"
+      },
+      {
+        "type": "text",
+        "id": "main-banner-body-dec",
+        "label": "Main Container Description"
+      },
+      {
+        "type": "text",
+        "id": "main-banner-body-dec-mobile",
+        "label": "Main Container Description for Mobile"
+      },
+      {
+        "type": "text",
+        "id": "sec-btn-text",
+        "label": "Secondary Button Text"
+      },
+      {
+        "type": "text",
+        "id": "main-footer-text",
+        "label": "Main Footer For section Text"
+      }
+    ],
+    //to add the section in themes
+    "presets": [
+      {
+        "name": "Main Banner"
+      }
+    ]
+  }
+  {% endschema %}
+  {% comment %} end schema {% endcomment %}
+   {% comment %} script javascript for small screen navbar {% endcomment %}
+    <script>
+      function myFunction() {
+          var x = document.getElementById("myTopnav");
+          if (x.className === "nav-for-small-screen") {
+              x.className += " responsive";
+          }
+          else{
+              x.className = "nav-for-small-screen";
+          }
+      }
+    </script>

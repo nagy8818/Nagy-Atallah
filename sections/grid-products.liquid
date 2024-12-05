@@ -1,0 +1,240 @@
+<section class="main-product-container">
+    <div class="grid-product-title">
+        <h2 class="product-title">{{ section.settings.main-product-title }}</h2>
+    </div>
+    {% comment %} grid table for products {% endcomment %}
+    <div class="all-products">
+        {% for product in section.settings.all-products %}
+          <div class="grid-products-table" data-image="{{ product.featured_image | image_url }}"
+          data-price="{{ product.price | money}}" data-name="{{ product.title }}"
+          data-description="{{ product.description | truncatewords: 15}}">
+          <img src="{{ product.featured_image | image_url }}" />
+    {% comment %} product color and size options {% endcomment %}
+          <div class="products-options-selections">
+            {% for option in product.options %}
+                {% assign option_index = forloop.index0 %}
+                {% if option == 'color' %}
+                    <div class="color-option">
+                        <label> 
+                            {{ option }}
+                        </label>
+                    </div>
+                    <div class="product-color-option-wrapper">
+                        {% for value in product.options_with_values[option_index].values %}
+                            <div class="product-color-input-wrapper">
+                                <input class="product-option-input" type="radio" id="{{ value }}-{{ product.id }}" name="{{ option }}" value="{{ value | escape}}" />
+                                <label class="product-color-label" for="{{ value }}-{{ product.id }}" > 
+                                    {{ value }}
+                                    </label>
+                                </div>                          
+                        {% endfor %}
+                    </div>
+            {% else %}
+                <div class="product-option-select-wrapper">
+                    <label for="option-{{ option_index }}">
+                        {{ option }}
+                    </label>
+                    <select class="product-option-select" id="option-{{ option_index }}" name="options[{{ option }}]">
+                        {% for value in product.options_with_values[option_index].values %}
+                          <option value="{{ value | escape }}"> {{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <span class="span_of-variant" style="display:none;">
+                    {% for variant_popup in product_variants %}
+                      <span class="variant_popup_details" data-popup-variant-title="{{ variant_popup.title }}" data-popup-variant-id="{{ variant_popup.id }}">
+                        {{ variant_popup.title }}
+                      </span>
+                    {% endfor %}
+                </span>
+           </div>
+          </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% render 'popup-cart' %}
+
+ {% comment %} start styling section with css {% endcomment %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+    .main-product-container{
+        display: flex;
+        flex-direction:column;
+        padding:90px 52px 52px;
+    }
+    .grid-product-title{
+        font-family: Lustria;
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 43.2px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        margin-bottom: auto ;
+    }
+    .all-products{
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .grid-products-table{
+        cursor:pointer;
+    }
+    .grid-products-table img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .products-options-selections{
+        display: none ;
+    }
+    {% comment %} display for small screens (mobiles) {% endcomment %}
+    @media only screen and (max-width: 768px){
+        .main-product-container{
+            padding-right:17px;
+            padding-left:17px;
+            padding-top:40px;
+        }
+        .grid-product-title{
+            font-family: Lustria;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 28.8px;
+            text-align: left;
+        }
+        .all-products{
+            display:grid;
+            grid-template-columns:repeat(2 , 1fr);
+            gap: 4px;
+        }
+    }
+    .color-option{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .product-color-input-wrapper{
+        display:flex;
+        border: 0.5px solid #000000;
+        position:relative;
+    }
+    .product-color-label + .product-option-input:checked{
+        background-color:#000000;
+        color:#ffffff;
+    }
+    .product-color-label{
+        width:135px ;
+        height: 40px;
+        display: flex;
+        align-items:center;
+        padding-left:15px;
+        font-size: 18px;
+        font-weight:400;
+        letter-spacing: -0.02em;
+        position:relative; 
+    }
+    .product-color-label:before{
+        content:'';
+        left:0;
+        top:0;
+        bottom:0;
+        width: 5.81px;
+        background-color:#ffffff;
+        position:absolute;
+        border-right:0.5px solid #000000;
+    }
+    .product-option-input{
+        position: absolute
+        top: 0:
+        left: 0:
+        opacity: 0:
+        z-index: 1;
+        cursor:pointer;
+        width:135px;
+        height:40.5px;
+    }
+    .product-color-option-wrapper{
+        display: flex;
+    }
+    .product-option-select-wrapper{
+        position: relative;
+        margin-top: 11.52px;
+        display: flex;
+        flex-direction:column;
+    }
+    .product-option-select{
+        width: 271px;
+        height: 40.5px;
+        background-color: transparent;
+        appearance:none;
+        cursor:pointer;
+        padding-left:13px;
+        font-size:16px;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+    }
+    .product-option-select{
+        outline:none;
+    }
+    .product-option-select-wrapper::after{
+        content: &darr ;
+        position: absolute;
+        right:10px;
+        top:50%;
+        pointer-events: none;
+        transform: translateY(-50%);
+    }
+
+</style>
+{% comment %} end styling {% endcomment %}
+{% comment %} schema to add values to vars {% endcomment %}
+{% schema %}
+{
+    "name": "main-product",
+    "settings": [
+        {
+            "type": "text",
+            "id": "main-product-title",
+            "label":"Main Products Title"
+        },
+        {
+            "type": "product_list",
+            "id": "all-products",
+            "label" : "All Products"
+        }
+    ],
+    "presets": [
+        {
+            "name": "grid products"
+        }
+    ]
+}
+{% endschema %}
+{% comment %} end schema {% endcomment %}
+{% comment %} start scripting with javascript {% endcomment %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const popup = document.getElementById('popup-msg');
+        const gridItems = document.querySelectorAll('.grid-products-table');
+
+        gridItems.forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelector('.product-popup-img').src = item.dataset.image;
+                document.querySelector('.product-popup-name').textContent = item.dataset.name;
+                document.querySelector('.product-popup-price').textContent = item.dataset.price;
+                document.querySelector('.product-popup-description').textContent = item.dataset.description;;
+                document.querySelector('.product-popup-options').innerHTML = item.querySelector('.product-option-select-wrapper').innerHTML;
+                popup.style.display = 'flex';
+                console.error('Error:', error);
+            });
+        });
+        window.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                popup.style.display = 'none';}
+        });
+    });
+</script>
