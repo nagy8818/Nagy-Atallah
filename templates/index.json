@@ -1,4 +1,13 @@
-{
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
   "sections": {
     "image_banner": {
       "type": "image-banner",
@@ -66,10 +75,39 @@
         "padding_top": 44,
         "padding_bottom": 36
       }
+    },
+    "main-banner": {
+      "type": "main-banner",
+      "settings": {
+        "main-banner-title": "Tisso Vison",
+        "main-center-text": "Find the ideal gift for your loved ones",
+        "main-banner-body-title": "The Gift Guide",
+        "main-head-button": "choose gif",
+        "main-banner-body-dec": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "main-banner-body-dec-mobile":"Discover Joy: Your Ultimate Holiday Gift Destination.",
+        "sec-btn-text":"Shop Now",
+        "main-footer-text":"SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      }
+    },
+    "product-grid": {
+      "type": "grid-products",
+      "settings": {
+        "all-products": [
+        "Black-leather-bag",
+        "blue-silk-tuxedo",
+        "chequered-red-shirt",
+        "classic-leather-jacket",
+        "classic-varsity-top",
+        "dark-denim-top"
+        ],
+        "main-product-title": "Tisso vison in the wild"
+      }
     }
   },
   "order": [
     "image_banner",
-    "featured_collection"
+    "featured_collection",
+    "main-banner",
+    "product-grid"
   ]
 }

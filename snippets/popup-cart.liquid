@@ -1,0 +1,158 @@
+<div class="popup-container" id="popup-msg">
+  <div class="popup-content">
+    <span class="close-button" onclick="close" >  X </span>
+    <div class="popup-product-contents">
+      <img class="product-popup-img" src="" alt="Product Image"/>
+      <div class="popup-summery">
+        <div class="product-popup-name"></div>
+        <div class="product-popup-price"></div>
+        <div class="product-popup-description"></div>
+      </div>
+    </div>
+    <div class="product-popup-options"></div>
+    {% render 'main-button', button_text: 'ADD TO CART', classname: 'popup-submit-button', variant: 'secondary' , data-product-id="{{ product.id }}" %}
+  </div>
+</div>
+
+<style>
+  .popup-container {
+    position: fixed;
+    top: 0;
+    display: none;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .popup-content {
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    width: 311px;
+    height: 447px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .close-button {
+    align-self: flex-end;
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .popup-product-contents {
+    display: flex;
+    height: 140px;
+  }
+  .product-popup-img {
+    width: 120px;
+    height: 100%;
+    margin-right: 8px;
+    object-fit: cover;
+    object-position: center;
+  }
+  .product-popup-name,
+  .product-popup-price,
+  .product-popup-description {
+    font-family: Jost;
+    line-height: 1.2;
+    text-align: left;
+  }
+  .product-popup-name {
+    margin-top: 13px;
+    font-size: 16px;
+    font-weight: 300;
+  }
+  .product-popup-price {
+    font-family: Lustria;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 22px;
+  }
+  .product-popup-description {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+  .popup-submit-button {
+    margin-top: 51px;
+    width: 271px;
+    font-family: Jost;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.48px;
+    text-align: center;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('popup-msg');
+    const popupClose = document.querySelector('.close-button');
+    const addToCartButton = document.querySelector('.popup-submit-button');
+
+    popupClose.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    addToCartButton.addEventListener('click', (event) => {
+      const popupContainer = event.target.closest('.popup-content');
+
+      const selected_color =
+        Array.from(popupContainer.querySelectorAll('.product-option-input')).find((input) => input.checked)?.value ||
+        '';
+      const selected_opt = popupContainer.querySelector('.product-option-select').value;
+      const variant_compare = `${selected_color} / ${selected_opt}`;
+
+      popupContainer.querySelectorAll('.variant_popup_details').forEach((variant_elem) => {
+        if (variant_elem.dataset.popupVariantTitle === variant_compare) {
+          const varId = variant_elem.dataset.popupVariantId;
+          const varTitle = variant_elem.dataset.popupVariantTitle;
+
+          const formData = {
+            items: [{ id: varId, quantity: 1 }],
+          };
+
+          fetch(`${window.Shopify.routes.root}cart/add.js`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          })
+            .then((response) => {
+              if (varTitle === 'Black / M') {
+                const giftformData = {
+                  items: [{ id: 9732796318013, quantity: 1 }],
+                };
+
+                fetch(`${window.Shopify.routes.root}cart/add.js`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(giftformData),
+                })
+                  .then((response) => {
+                    location.href = '/cart';
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+              } else {
+                location.href = '/cart';
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+      });
+    });
+  });
+
+  function closePopup() {
+    document.getElementById('popup-msg').style.display = 'none';
+  }
+</script>
